@@ -14,7 +14,7 @@
 // Setup for Adafruit LED Matrix
 // -----------------------------
 
-Adafruit_8x8matrix matrix = Adafruit_8x8matrix();
+//Adafruit_8x8matrix matrix = Adafruit_8x8matrix();
 
 
 // Setup for MMA8452Q accelerometer
@@ -42,10 +42,10 @@ float accelG[3];  // Stores the real accel value in g's
 
 void setup()
 {
-    matrix.begin(0x70);  // pass in the address  
+  //  matrix.begin(0x70);  // pass in the address  
     
-    
-      byte c;
+   
+  byte c;
   
   Serial.begin(115200);//previously set as 115200
   
@@ -84,11 +84,13 @@ static const uint8_t PROGMEM
     B00000100 };
 
 void loop()
-{  
+{ 
+  /* 
   matrix.clear();
   matrix.drawBitmap(0, 0, right_up, 8, 8, LED_ON);
   matrix.writeDisplay();
   delay(500);
+  */
 
   static byte source;
   
