@@ -139,6 +139,8 @@ void loop()
 		accelG[i] = (float) accelCount[i] * 10  / ((1<<12)/(2*GSCALE));
 	}
 
+
+        /*
 	// Print out values
 	for (int i = 0 ; i < 3 ; i++)
 	{
@@ -146,6 +148,7 @@ void loop()
 		Serial.print("\t");  // tabs in between axes
 	}
         Serial.println();
+        */
 
   
   	// SMOOTHING OF ACCELERATION OBSERVATIONS USING AVERAGES
@@ -187,17 +190,37 @@ void loop()
 
         Serial.print(x_average);
         Serial.print("\t");
-Serial.print(y_average);
-Serial.print("\t");
-Serial.print(z_average);
-Serial.print("\t");
+        Serial.print(y_average);
+        Serial.print("\t");
+        Serial.print(z_average);
+        Serial.print("\t");
         Serial.println();
 
 	if ( x_average <= -9 ) {
-		Serial.println("FREEFALL ON X-AXIS");
-		freefalled = 1;
+		Serial.println("TILT RIGHT");
 	}
 
+	if ( x_average >= 9 ) {
+		Serial.println("TILT LEFT");
+	}
+
+	if ( y_average <= -9 ) {
+		Serial.println("TILT UP");
+	}
+
+	if ( y_average >= 9 ) {
+		Serial.println("TILT DOWN");
+	}
+        
+	if ( z_average <= -9 ) {
+		Serial.println("FACE DOWN");
+	}
+
+	if ( z_average >= 9 ) {
+		Serial.println("FACE UP");
+	}
+        
+        /*
 	if ( y_average <= -13.0 | y_average >= 13) {
 		Serial.println("FREEFALL ON Y-AXIS");
 		freefalled = 1;
@@ -207,7 +230,7 @@ Serial.print("\t");
 		Serial.println("FREEFALL ON Z-AXIS");
 		freefalled = 1;
 	}
-
+        */
   
   
 }
