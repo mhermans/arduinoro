@@ -55,6 +55,15 @@ static const uint8_t PROGMEM
     B00001110,
     B00010101,
     B00000100 },
+ left_up[] =
+  { B00000100,
+    B00001000,
+    B00011111,
+    B00001000,
+    B00100100,
+    B01110000,
+    B10101000,
+    B00100000 },   
   right_down[] =
   { B00111100,
     B01000010,
@@ -198,26 +207,46 @@ void loop()
 
 	if ( x_average <= -9 ) {
 		Serial.println("TILT RIGHT");
+                matrix.clear();
+                //matrix.drawBitmap(0, 0, right_up, 8, 8, LED_ON);
+                matrix.drawChar(0, 1, 'A', 1, 1, 1);
+                matrix.writeDisplay();
 	}
 
 	if ( x_average >= 9 ) {
 		Serial.println("TILT LEFT");
+                matrix.clear();
+                //matrix.drawBitmap(0, 0, left_up, 8, 8, LED_ON);
+                matrix.drawChar(0, 1, 'B', 1, 1, 1);
+                matrix.writeDisplay();
 	}
 
 	if ( y_average <= -9 ) {
 		Serial.println("TILT UP");
+                matrix.clear();
+                matrix.drawChar(0, 1, 'C', 1, 1, 1);
+                matrix.writeDisplay();
 	}
 
 	if ( y_average >= 9 ) {
 		Serial.println("TILT DOWN");
+                matrix.clear();
+                matrix.drawChar(0, 1, 'D', 1, 1, 1);
+                matrix.writeDisplay();
 	}
         
 	if ( z_average <= -9 ) {
 		Serial.println("FACE DOWN");
+                matrix.clear();
+                matrix.drawChar(0, 1, 'E', 1, 1, 1);
+                matrix.writeDisplay();
 	}
 
 	if ( z_average >= 9 ) {
 		Serial.println("FACE UP");
+                matrix.clear();
+                matrix.drawChar(0, 1, 'F', 1, 1, 1);
+                matrix.writeDisplay();
 	}
         
         /*
