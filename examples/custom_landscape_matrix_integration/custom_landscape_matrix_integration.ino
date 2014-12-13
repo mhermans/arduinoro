@@ -86,6 +86,8 @@ float x_average = 0;
 
 int averages[3];
 
+int freefalled = 0;
+
 void setup()
 {
     matrix.begin(LEDMATRIX_ADDRESS);  // pass in the address  
@@ -107,7 +109,8 @@ void setup()
 
 
 void loop()
-{  
+{
+/*  
   matrix.clear();
   matrix.drawBitmap(0, 0, right_up, 8, 8, LED_ON);
   matrix.writeDisplay();
@@ -117,7 +120,7 @@ void loop()
  matrix.drawBitmap(0, 0, right_down, 8, 8, LED_ON);
  matrix.writeDisplay();
  delay(500);
-
+*/
 
 	// READ ACCELERATION OBSERVATIONS
 	// ==============================
@@ -128,7 +131,6 @@ void loop()
 	// Now we'll calculate the accleration value into actual g's
 	float accelG[3];  // Stores the real accel value in g's
 	float conversion[3];  // Stores the real accel value in g's
-	int colorValues[3];
 
 	for (int i = 0 ; i < 3 ; i++)
 	{
@@ -145,6 +147,68 @@ void loop()
 	}
         Serial.println();
 
+  
+  	// SMOOTHING OF ACCELERATION OBSERVATIONS USING AVERAGES
+	// =====================================================
+
+	x_total= x_total - x_readings[index];
+	x_readings[index] = accelG[0];
+	x_total= x_total + x_readings[index];
+
+	y_total= y_total - y_readings[index];
+	y_readings[index] = accelG[1];
+	y_total= y_total + y_readings[index];
+
+	z_total= z_total - z_readings[index];
+	z_readings[index] = accelG[2];
+	z_total= z_total + z_readings[index];
+
+	// advance to the next position in the array:
+	index = index + 1;
+
+	// if we're at the end of the array...
+	if (index >= numReadings)
+		// ...wrap around to the beginning:
+		index = 0;
+
+	// calculate the average:
+	y_average = y_total / numReadings;
+	z_average = z_total / numReadings;
+	x_average = x_total / numReadings;
+
+	averages[0] = x_average;
+	averages[1] = y_average;
+	averages[2] = z_average;
+
+
+
+	// DETECT FREEFALL BASED ON SMOOTHED OBSERVATIONS
+	// ==============================================
+
+        Serial.print(x_average);
+        Serial.print("\t");
+Serial.print(y_average);
+Serial.print("\t");
+Serial.print(z_average);
+Serial.print("\t");
+        Serial.println();
+
+	if ( x_average <= -9 ) {
+		Serial.println("FREEFALL ON X-AXIS");
+		freefalled = 1;
+	}
+
+	if ( y_average <= -13.0 | y_average >= 13) {
+		Serial.println("FREEFALL ON Y-AXIS");
+		freefalled = 1;
+	}
+
+	if ( z_average <= -13.0 | z_average >= 13) {
+		Serial.println("FREEFALL ON Z-AXIS");
+		freefalled = 1;
+	}
+
+  
   
 }
 
