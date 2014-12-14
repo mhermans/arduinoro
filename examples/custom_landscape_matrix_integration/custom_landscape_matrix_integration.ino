@@ -11,6 +11,10 @@
 
 #include <Wire.h>
 
+// ToneAC library
+
+#include <toneAC.h>
+
 // Imports for Adafruit LED matrix
 // -------------------------------
 
@@ -218,6 +222,11 @@ void loop()
                 //matrix.drawBitmap(0, 0, left_up, 8, 8, LED_ON);
                 matrix.drawChar(0, 1, 'B', 1, 1, 1);
                 matrix.writeDisplay();
+                
+                        toneAC(1000); // Play the frequency (150 Hz to 15 kHz).
+        delay(1);     // Wait 1 ms so you can hear it.
+      //toneAC(0); // Turn off toneAC, can also use noToneAC().
+                
 	}
 
 	if ( y_average <= -9 ) {
@@ -225,6 +234,9 @@ void loop()
                 matrix.clear();
                 matrix.drawChar(0, 1, 'C', 1, 1, 1);
                 matrix.writeDisplay();
+                
+                toneAC(0);
+                
 	}
 
 	if ( y_average >= 9 ) {
