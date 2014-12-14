@@ -149,7 +149,7 @@ void loop()
 	}
 
 
-        /*
+        
 	// Print out values
 	for (int i = 0 ; i < 3 ; i++)
 	{
@@ -157,8 +157,7 @@ void loop()
 		Serial.print("\t");  // tabs in between axes
 	}
         Serial.println();
-        */
-
+        
   
   	// SMOOTHING OF ACCELERATION OBSERVATIONS USING AVERAGES
 	// =====================================================
@@ -248,6 +247,9 @@ void loop()
                 matrix.drawChar(0, 1, 'F', 1, 1, 1);
                 matrix.writeDisplay();
 	}
+
+        
+        
         
         /*
 	if ( y_average <= -13.0 | y_average >= 13) {
@@ -342,7 +344,16 @@ void readRegisters(byte addressToRead, int bytesToRead, byte * dest)
 
 	Wire.requestFrom(MMA8452_ADDRESS, bytesToRead); //Ask for bytes, once done, bus is released by default
 
-	while(Wire.available() < bytesToRead); //Hang out until we get the # of bytes we expect
+//      dit was oude delay:
+//	while(Wire.available() < bytesToRead); //Hang out until we get the # of bytes we expect
+
+//      zet er een ruwe time-out functie rond, anders bleef loop soms hangen (slecht contact/rate?)
+//      betere oplossing is niet continue pollen, maar via interupts werken
+        int x = 0;
+        while(Wire.available() < bytesToRead && x < 1000){
+        x++;
+        continue; // TODO nu negeren we gewoon gemiste metingen -> niet echt een probleem voor ruwe gemiddelde -> orientatie omzetting
+        }
 
 	for(int x = 0 ; x < bytesToRead ; x++)
 		dest[x] = Wire.read();
