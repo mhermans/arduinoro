@@ -214,6 +214,8 @@ void loop()
                 //matrix.drawBitmap(0, 0, right_up, 8, 8, LED_ON);
                 matrix.drawChar(0, 1, 'A', 1, 1, 1);
                 matrix.writeDisplay();
+                
+                toneAC(500); // 
 	}
 
 	if ( x_average >= 9 ) {
@@ -223,9 +225,9 @@ void loop()
                 matrix.drawChar(0, 1, 'B', 1, 1, 1);
                 matrix.writeDisplay();
                 
-                        toneAC(1000); // Play the frequency (150 Hz to 15 kHz).
-        delay(1);     // Wait 1 ms so you can hear it.
-      //toneAC(0); // Turn off toneAC, can also use noToneAC().
+                toneAC(1000); // Play the frequency (150 Hz to 15 kHz).
+                //delay(1);     // Wait 1 ms so you can hear it.
+                //toneAC(0); // Turn off toneAC, can also use noToneAC().
                 
 	}
 
@@ -235,7 +237,7 @@ void loop()
                 matrix.drawChar(0, 1, 'C', 1, 1, 1);
                 matrix.writeDisplay();
                 
-                toneAC(0);
+                toneAC(1500); // 
                 
 	}
 
@@ -244,6 +246,8 @@ void loop()
                 matrix.clear();
                 matrix.drawChar(0, 1, 'D', 1, 1, 1);
                 matrix.writeDisplay();
+                
+                toneAC(2000); // 
 	}
         
 	if ( z_average <= -9 ) {
@@ -251,6 +255,8 @@ void loop()
                 matrix.clear();
                 matrix.drawChar(0, 1, 'E', 1, 1, 1);
                 matrix.writeDisplay();
+                
+                toneAC(2500); // 
 	}
 
 	if ( z_average >= 9 ) {
@@ -258,6 +264,9 @@ void loop()
                 matrix.clear();
                 matrix.drawChar(0, 1, 'F', 1, 1, 1);
                 matrix.writeDisplay();
+                
+                toneAC(0);
+                
 	}
 
         
